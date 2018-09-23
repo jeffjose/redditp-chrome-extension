@@ -4,7 +4,7 @@
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "Quickly view a subreddit in redditp",
+    "message": "Quickly view subreddit(s) in redditp",
     "description": "The description of the application"
   }
 }
