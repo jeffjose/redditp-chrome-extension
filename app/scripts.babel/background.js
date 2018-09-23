@@ -1,11 +1,22 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(details => {
-  console.log('previousVersion', details.previousVersion);
-});
-
 chrome.tabs.onUpdated.addListener(tabId => {
-  chrome.pageAction.show(tabId);
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { hostContains: '.reddit.com' },
+          })
+        ],
+        actions: [ new chrome.declarativeContent.ShowPageAction() ]
+      }
+    ]);
+  });
 });
 
-console.log('\'Allo \'Allo! Event Page for Page Action');
+chrome.pageAction.onClicked.addListener(function(tab) {
+  var newUrl = tab.url.replace(
+    '//old.', '//').replace('reddit.com', 'redditp.com');
+  chrome.tabs.update({url: newUrl});
+});
