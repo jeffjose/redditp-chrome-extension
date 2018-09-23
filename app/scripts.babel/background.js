@@ -16,7 +16,9 @@ chrome.tabs.onUpdated.addListener(tabId => {
 });
 
 chrome.pageAction.onClicked.addListener(function(tab) {
-  var newUrl = tab.url.replace(
-    '//old.', '//').replace('reddit.com', 'redditp.com');
-  chrome.tabs.update({url: newUrl});
+  var newUrl = tab.url
+    .replace('//old.', '//')
+    .replace('reddit.com', 'redditp.com')
+    .replace(/\/comments*/, '');
+  chrome.tabs.update({ url: newUrl });
 });
